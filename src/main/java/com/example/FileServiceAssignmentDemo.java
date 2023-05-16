@@ -10,6 +10,14 @@ public class FileServiceAssignmentDemo {
   public static void main(String[] args) {
     System.out.println();
 
+    Mono<String> readMono = FileService.read("file01.txt");
+
+    readMono
+    .doOnNext(MyUtil.onNext())
+    .doOnError(MyUtil.onError())
+    .doOnTerminate(MyUtil.onComplete())
+    .subscribe();
+
     FileService.read("file01.txt")
       .subscribe(
         MyUtil.onNext(),
@@ -27,6 +35,10 @@ public class FileServiceAssignmentDemo {
         MyUtil.onNext(),
         MyUtil.onError(),
         MyUtil.onComplete());
+
+    MyUtil.SleepFor(5);
   }
+
+
 
 }
